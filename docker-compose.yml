@@ -9,9 +9,9 @@ services:
     ports:
       - "8080:8080" # Host:Container
     env_file:
-      - ./backend/.env
+      - ./backend.env
     volumes:
-      - ./backend/.env:/app/.env # Optional: Mount .env file if your app reads from the filesystem
+      - ./backend.env:/app/.env # Optional: Mount .env file if your app reads from the filesystem
     networks:
       - app-network
     # healthcheck:
@@ -28,7 +28,7 @@ services:
     ports:
       - "3000:3000" # Host:Container
     env_file:
-      - ./frontend_new/.env.local
+      - ./frontend.env
     depends_on:
       - backend
     networks:
