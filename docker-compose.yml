@@ -2,9 +2,7 @@
 
 services:
   backend:
-    build:
-      context: ./backend
-      dockerfile: Dockerfile
+    image: bhand247/backend:latest
     container_name: backend
     ports:
       - "8080:8080" # Host:Container
@@ -21,9 +19,7 @@ services:
     #   retries: 3
 
   frontend:
-    build:
-      context: ./frontend_new
-      dockerfile: Dockerfile
+    image: bhand247/frontend:latest
     container_name: frontend
     ports:
       - "3000:3000" # Host:Container
