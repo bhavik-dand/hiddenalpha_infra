@@ -10,12 +10,16 @@ services:
       - ./backend.env:/app/.env # Optional: Mount .env file if your app reads from the filesystem
     networks:
       - app-network
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 1G
     # healthcheck:
     #   test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
     #   interval: 1m30s
     #   timeout: 10s
     #   retries: 3
-
   frontend:
     image: bhand247/frontend:latest
     container_name: frontend
@@ -27,7 +31,11 @@ services:
       - backend
     networks:
       - app-network
-
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 1.5G
   jarvis:
     image: bhand247/jarvis:latest
     container_name: jarvis
@@ -36,7 +44,12 @@ services:
     env_file:
       - ./jarvis.env
     networks:
-        - app-network
+      - app-network
+    deploy:
+      resources:
+        limits:
+          cpus: '5.4'
+          memory: 5.4G
         
   watchtower:
     image: containrrr/watchtower
@@ -47,7 +60,11 @@ services:
     environment:
       - WATCHTOWER_CLEANUP=true
       - WATCHTOWER_POLL_INTERVAL=300
-
+    deploy:
+      resources:
+        limits:
+          cpus: '0.1'
+          memory: 100M
 networks:
   app-network:
     driver: bridge
