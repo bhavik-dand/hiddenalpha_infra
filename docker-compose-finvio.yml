@@ -1,0 +1,43 @@
+services:
+  finvio-backend:
+    image: bhand247/finvio-backend:latest
+    container_name: finvio-backend
+    ports:
+      - "8000:8000" # Host:Container
+    env_file:
+      - ./backend.env
+    volumes:
+      - ./backend.env:/app/.env # Optional: Mount .env file if your app reads from the filesystem
+    networks:
+      - app-network
+    # healthcheck:
+    #   test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+    #   interval: 1m30s
+    #   timeout: 10s
+    #   retries: 3
+
+  finvio-frontend:
+    image: bhand247/finvio-frontend:latest
+    container_name: finvio-frontend
+    ports:
+      - "3000:3000" # Host:Container
+    env_file:
+      - ./frontend.env
+    depends_on:
+      - backend
+    networks:
+      - app-network
+        
+  watchtower:
+    image: containrrr/watchtower
+    container_name: watchtower
+    restart: unless-stopped
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - WATCHTOWER_CLEANUP=true
+      - WATCHTOWER_POLL_INTERVAL=300
+
+networks:
+  app-network:
+    driver: bridge
