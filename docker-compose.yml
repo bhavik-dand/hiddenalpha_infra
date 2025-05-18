@@ -1,9 +1,9 @@
 services:
   backend:
-    image: bhand247/backend:latest
-    container_name: backend
+    image: bhand247/finvio-backend:finvio
+    container_name: finvio-backend
     ports:
-      - "8080:8080" # Host:Container
+      - "8000:8000" # Host:Container
     env_file:
       - ./backend.env
     volumes:
@@ -17,8 +17,8 @@ services:
     #   retries: 3
 
   frontend:
-    image: bhand247/frontend:latest
-    container_name: frontend
+    image: bhand247/finvio-frontend:finvio
+    container_name: finvio-frontend
     ports:
       - "3000:3000" # Host:Container
     env_file:
@@ -28,15 +28,6 @@ services:
     networks:
       - app-network
 
-  jarvis:
-    image: bhand247/jarvis:latest
-    container_name: jarvis
-    ports:
-      - "8000:8000"
-    env_file:
-      - ./jarvis.env
-    networks:
-        - app-network
         
   watchtower:
     image: containrrr/watchtower
