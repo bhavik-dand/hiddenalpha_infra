@@ -24,7 +24,7 @@ services:
     env_file:
       - ./frontend.env
     depends_on:
-      - backend
+      - finvio-backend
     networks:
       - app-network
         
